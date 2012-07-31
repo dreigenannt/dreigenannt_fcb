@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facebook Form Buildout Samples</title>
+</head>
+<body>
+
+<h3>1. create html form</h3>
+<pre>
+<form action="samples.php" id="signIn" method="post">
+	<div class="formItem">
+		<label id="lblName">First and Last Name</label> <input type="text"
+			id="inputName" name="inputName" />
+	</div>
+	<div class="formItem">
+		<label id="lblEmail">Email Address</label> <input type="text"
+			id="inputEmail" name="inputEmail" />
+	</div>
+	<div class="formItem">
+		<input type="submit" id="inputSignIn" name="inputSignIn"
+			value="Sign in" />
+	</div>
+</form>
+</pre>
+
+<h3>2-3. Load form into separate file; require file and call function to display form</h3>
+<pre>
+		<?php include_once('forms.php');
+		display_login_form();
+		?>
+</pre>
+
+<h3>4. Create the if-postback condition, else display form</h3>
+<pre>
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			echo "you are logged in";
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+<h3>5. Create conditions for successful login, else form function</h3>
+<pre>
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			if(($_POST['inputName']) && ($_POST['inputEmail'])) {
+				echo "you are logged in";
+			} else {
+				echo '<strong>Please fill out all fields</strong><br />';
+				display_login_form();
+			}
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+
+<h3>6. Assign variables to postback variables; sanitize</h3>
+<pre>
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			if(($_POST['inputName']) && ($_POST['inputEmail'])) {
+				$loginName = htmlentities($_POST['inputName']);
+				$loginEmail = htmlentities($_POST['inputEmail']);
+				echo "you are logged in";
+			} else {
+				echo '<strong>Please fill out all fields</strong><br />';
+				display_login_form();
+			}
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+<h3>7. Initiate session at top of document</h3>
+<pre>
+		<?php session_start(); ?>
+		//Initial HTML declarations go here
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			if(($_POST['inputName']) && ($_POST['inputEmail'])) {
+				$loginName = htmlentities($_POST['inputName']);
+				$loginEmail = htmlentities($_POST['inputEmail']);
+				echo "you are logged in";
+			} else {
+				echo '<strong>Please fill out all fields</strong><br />';
+				display_login_form();
+			}
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+<h3>8. Assign session variable(s) to variables created from postback</h3>
+<pre>
+		<?php session_start(); ?>
+		//Initial HTML declarations go here
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			if(($_POST['inputName']) && ($_POST['inputEmail'])) {
+				$loginName = htmlentities($_POST['inputName']);
+				$loginEmail = htmlentities($_POST['inputEmail']);
+				$_SESSION['loginName'] = $loginName;
+				echo "you are logged in";
+			} else {
+				echo '<strong>Please fill out all fields</strong><br />';
+				display_login_form();
+			}
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+<h3>9. Create functions.php file and write logout function</h3>
+<pre>
+function user_logout() {
+	unset($_SESSION);
+}
+</pre>
+
+<h3>10. Link and call logout function</h3>
+<pre>
+		<?php session_start(); ?>
+		//Initial HTML declarations go here
+		<?php include('functions.php'); ?>
+		//body begins here
+		<?php include_once('forms.php');
+		if($_SERVER['REQUEST_METHOD'] == '$_POST') {
+			if(($_POST['inputName']) && ($_POST['inputEmail'])) {
+				$loginName = htmlentities($_POST['inputName']);
+				$loginEmail = htmlentities($_POST['inputEmail']);
+				$_SESSION['loginName'] = $loginName;
+				echo "you are logged in";
+				echo "<a href='", $_SERVER ['PHP_SELF'], "' onclick='<?php user_logout(); ?>'>Logout</a>";
+			} else {
+				echo '<strong>Please fill out all fields</strong><br />';
+				display_login_form();
+			}
+		} else {
+		display_login_form();
+		}
+		?>
+</pre>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+</body>
+</html>

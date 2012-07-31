@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS logins
+(
+login_id		INT PRIMARY KEY AUTO_INCREMENT,
+login_name		VARCHAR(150) NOT NULL,
+login_email		VARCHAR(150) NOT NULL,
+UNIQUE (login_email)
+)

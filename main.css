@@ -1,0 +1,29 @@
+
+* {margin:0; padding:0; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; }
+
+body {background-color:#888844; }
+#wrapper{width:80%; margin:2em auto; background-color:#fff; padding:1.2em; }
+	/*#wrapper div {width:90%; margin:0 auto 4em; border:1px solid #444400; padding:1em; }
+	#wrapper div div {width:auto; margin:0; border:0; padding:0; } */
+
+h1 {font-size:1.5em; margin:0 0 .4em; }
+h3 {font-size:1em; margin:.2em 0 .4em; }
+
+p {font-size:.82em; margin:.2em 0 1em; }
+
+span.logout {padding-left:1em; font-size:.78em; }
+
+form {}
+form#signIn {display:inline-block; width:inherit; }
+div.formItem {display:block; margin-bottom:1.3em; } /* signIn */
+div.formItem label {display:block; line-height:1.2em; font-size:.85em; text-transform:uppercase; } /* signIn */
+div.formItem input {font-size:1em; color:#777; width:100%; padding:.3em; }
+div.formItem input[type="submit"] {width:10em; }
+
+
+div#fb-root {border:0; margin:0; padding:0; height:1px; }
+div.fb-login-button {display:inline; }
+
+#phpAuthenticate, #fbAuthenticate {display:inline; width:30%; }
+#or {display:inline; padding: 0 3em; width:5%; }
+#auth-loggedout, #auth-loggedin {display:inline; }
