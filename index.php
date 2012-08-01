@@ -8,8 +8,6 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 	<?php 
 		include('functions.php');
-		db_connect();
-		load_db();
 	 ?>
 </head>
 <body>
@@ -29,12 +27,12 @@
 					$_SESSION ['loginEmail'] = $loginEmail;
 					
 					$result = mysql_query ( "SELECT * from logins where loginEmail = '$loginEmail'" );
-					var_dump($result);
-						$row = mysql_fetch_array($result);
+					//var_dump($result);
+						$row = mysql_fetch_assoc($result);
 						//var_dump($row ['loginEmail'], $loginEmail);
 						if ($row ['loginEmail'] == $loginEmail) {
 							// if returned email and password are already in db, echo "logged in as"
-							var_dump($row['loginPass'], $loginPass);
+							//var_dump($row['loginPass'], $loginPass);
 							if ($row ['loginPass'] == $loginPass) {
 								echo "Signed in as ", $loginEmail, " (&nbsp;<a href='", $_SERVER ['PHP_SELF'], "' onclick='user_logout();'>Logout</a>&nbsp;)<br />";
 							} else {
