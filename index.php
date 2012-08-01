@@ -15,39 +15,40 @@
 <body>
 	<?php include_once('fb_init.php'); ?>
 	<div id="wrapper">
-		<h1>Facebook Integration Tests</h1>
-		<p>Device sequential services servicing services deviation reflective
-			n-tier, integer ethernet capacitance converter. Connectivity solution
-			audio connectivity transponder, element, n-tier ethernet feedback
-			device, video logistically. Coordinated inversion hyperlinked
-			connectivity, transponder device sequential fragmentation, interface.
-		</p>
-		<p>Port plasma anomaly partitioned array capacitance encapsulated
-			pulse kilohertz bypass logistically. Interface data developer
-			developer remote scalar device distributed coordinated. Partitioned
-			reflective, bridgeware, cache potentiometer computer plasma converter
-			developer application.</p>
-
+		<h1>Register for School Choice</h1>
 
 		<?php include_once('forms.php'); ?>
 		<?php
 			if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 				//var_dump($_SESSION);
-				if (($_POST ['inputName']) && ($_POST ['inputEmail'])) {
-					// var_dump($_POST['inputName'],($_POST['inputEmail']));
-					$loginName = htmlentities( $_POST ['inputName'] );
+				if (($_POST ['inputEmail']) && ($_POST ['inputPass'])) {
+					db_connect();
+					load_db();
 					$loginEmail = htmlentities( $_POST ['inputEmail'] );
-					$_SESSION ['loginName'] = $loginName;
-					echo "Hello, ", $loginName, " / ", $loginEmail, " (&nbsp;<a href='", $_SERVER ['PHP_SELF'], "' onclick='<?php user_logout(); ?>'>Logout</a>&nbsp;)<br />";
+					$loginPass = md5( $_POST ['inputPass'] );
+					$_SESSION ['loginEmail'] = $loginEmail;
 					
-					$sql = "SELECT login_name FROM logins";
-					$result = mysql_query($sql);
-					print("<p><strong>Database entries:</strong><br />");
-					while($row = mysql_fetch_array($result)) {
-						printf("%s <br />", $row['login_name']);
-					}
-					print("</p>");
-					mysql_free_result($result);
+					$result = mysql_query ( "SELECT * from logins where loginEmail = '$loginEmail'" );
+					var_dump($result);
+						$row = mysql_fetch_array($result);
+						//var_dump($row ['loginEmail'], $loginEmail);
+						if ($row ['loginEmail'] == $loginEmail) {
+							// if returned email and password are already in db, echo "logged in as"
+							var_dump($row['loginPass'], $loginPass);
+							if ($row ['loginPass'] == $loginPass) {
+								echo "Signed in as ", $loginEmail, " (&nbsp;<a href='", $_SERVER ['PHP_SELF'], "' onclick='user_logout();'>Logout</a>&nbsp;)<br />";
+							} else {
+								// if email is already in db and password is wrong:
+								display_login_form ();
+								die ( '<p>This email address is already registered. Please log in with your existing password.</p>' );
+							}
+						} else {
+							// if email address is new
+							$loginQuery = mysql_query("INSERT INTO logins(loginEmail,loginPass) VALUES('$loginEmail','$loginPass')");
+							echo "Welcome, ", $loginEmail, " (&nbsp;<a href='", $_SERVER ['PHP_SELF'], "' onclick='user_logout();'>Logout</a>&nbsp;)<br />";
+						}
+					
+					
 					mysql_close();
 					
 				} else {

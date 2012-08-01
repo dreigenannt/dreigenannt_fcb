@@ -10,7 +10,7 @@ function db_connect() {
 }
 
 function load_db() {
-	$db = mysql_select_db('fblogin');
+	$db = mysql_select_db('school_choice');
 	if(!$db) {
 		die('This site\'s database is not available: ' . mysql_error());
 	}
